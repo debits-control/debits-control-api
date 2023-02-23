@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
-from app.schema.base_schema import ModelBaseInfo
+from app.schema.base_schema import BaseSchema
 
 
 class DebitBase(BaseModel):
@@ -12,7 +12,7 @@ class DebitCreate(DebitBase):
     ...
 
 
-class Debit(ModelBaseInfo, DebitBase):
+class Debit(BaseSchema, DebitBase):
     id: int
     user_id: int
     payment_type_id: int

@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
-from app.schema.base_schema import ModelBaseInfo
+from app.schema.base_schema import BaseSchema
 
 
 class PaymentTypeBase(BaseModel):
@@ -13,7 +13,7 @@ class PaymentTypeCreate(PaymentTypeBase):
     ...
 
 
-class PaymentType(ModelBaseInfo, PaymentTypeBase):
+class PaymentType(BaseSchema, PaymentTypeBase):
     id: int
     owner_id: int
 

@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
-from app.schema.base_schema import ModelBaseInfo
+from app.schema.base_schema import BaseSchema
 
 
 class UserBase(BaseModel):
@@ -12,9 +12,8 @@ class UserCreate(UserBase):
     password: str
 
 
-class User(ModelBaseInfo, UserBase):
+class User(BaseSchema, UserBase):
     id: int
-    user_token: str
 
     class Config:
         orm_mode = True
