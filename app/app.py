@@ -3,6 +3,7 @@ from fastapi.responses import RedirectResponse
 
 from app.core.container import Container
 from app.routers.user_routers import router as user_router
+from app.routers.payment_type_routers import payment_type_router
 
 app = FastAPI()
 
@@ -28,6 +29,7 @@ class AppCreator:
             return RedirectResponse(url='/docs')
 
         self.app.include_router(user_router)
+        self.app.include_router(payment_type_router)
 
 
 app_creator = AppCreator()
