@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from fastapi.responses import RedirectResponse
 
 from app.core.container import Container
+from app.routers.debit_routers import debit_router
 from app.routers.payment_type_routers import payment_type_router
 from app.routers.user_routers import router as user_router
 
@@ -26,6 +27,7 @@ class AppCreator:
 
         self.app.include_router(user_router)
         self.app.include_router(payment_type_router)
+        self.app.include_router(debit_router)
 
 
 app_creator = AppCreator()
