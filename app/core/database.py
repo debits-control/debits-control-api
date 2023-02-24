@@ -1,32 +1,8 @@
-from typing import Any
+from typing import Callable
+from contextlib import AbstractContextManager, contextmanager
 
 from sqlalchemy import create_engine, Column, Integer, DateTime, func
-from sqlalchemy.orm import sessionmaker, as_declarative, declared_attr, Session
-
-SQLALCHEMY_DATABASE_URL = 'sqlite:///./sql_app.db'
-
-engine = create_engine(
-    SQLALCHEMY_DATABASE_URL,
-    connect_args={'check_same_thread': False},  # only needed to sqlite database, remove to others
-    echo=True,
-)
-
-SessionLocal = sessionmaker(
-    autoflush=False,
-    autocommit=False,
-    bind=engine
-)
-
-
-def get_db() -> Session:
-    session: Session = SessionLocal()
-    try:
-        yield session
-    except Exception:
-        session.rollback()
-        raise
-    finally:
-        session.close()
+from sqlalchemy.orm import sessionmaker, as_declarative, declared_attr, Session, scoped_session
 
 
 @as_declarative()
@@ -49,17 +25,20 @@ class Database:
             connect_args={'check_same_thread': False},  # only needed to sqlite database, remove to others
             echo=True,
         )
-        self.session_local = sessionmaker(
-            autoflush=False,
-            autocommit=False,
-            bind=self._engine
+        self._session_factory = scoped_session(
+            sessionmaker(
+                autoflush=False,
+                autocommit=False,
+                bind=self._engine
+            ),
         )
 
     def create_database(self) -> None:
         BaseModel.metadata.create_all(self._engine)
 
-    def get_db(self) -> Session:
-        session: Session = self.session_local()
+    @contextmanager
+    def session(self) -> Callable[..., AbstractContextManager[Session]]:
+        session: Session = self._session_factory()
         try:
             yield session
         except Exception:

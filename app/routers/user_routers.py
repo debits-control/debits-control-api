@@ -1,9 +1,9 @@
+from dependency_injector.wiring import Provide, inject
 from fastapi import APIRouter, Depends
-from sqlalchemy.orm import Session
 
-from app.core.database import get_db
-from app.factory.user_factory import user_factory
+from app.core.container import Container
 from app.schema.user_schema import User, UserCreate
+from app.services.user_service import UserService
 
 router = APIRouter(
     prefix='/user',
@@ -12,26 +12,26 @@ router = APIRouter(
 
 
 @router.get('', response_model=list[User])
+@inject
 async def get_user_list(
-        session: Session = Depends(get_db)
+        service: UserService = Depends(Provide[Container.user_service])
 ):
-    service = user_factory(session)
     return service.get_list()
 
 
 @router.post('', response_model=User)
+@inject
 async def create_user(
         user: UserCreate,
-        session: Session = Depends(get_db)
+        service: UserService = Depends(Provide[Container.user_service])
 ):
-    service = user_factory(session)
     return service.add(user)
 
 
 @router.post('/{user_id}', response_model=User)
+@inject
 async def get_user_by_id(
         user_id: int,
-        session: Session = Depends(get_db)
+        service: UserService = Depends(Provide[Container.user_service])
 ):
-    service = user_factory(session)
     return service.get_by_id(user_id)

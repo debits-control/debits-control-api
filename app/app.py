@@ -21,12 +21,8 @@ class AppCreator:
         )
 
         self.container = Container()
-        self.db = self.container.database
+        self.db = self.container.database()
         self.db.create_database()
-
-        @app.get("/", response_class=RedirectResponse, include_in_schema=False)
-        async def root():
-            return RedirectResponse(url='/docs')
 
         self.app.include_router(user_router)
         self.app.include_router(payment_type_router)

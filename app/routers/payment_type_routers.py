@@ -1,9 +1,9 @@
+from dependency_injector.wiring import Provide, inject
 from fastapi import APIRouter, Depends
-from sqlalchemy.orm import Session
 
-from app.core.database import get_db
-from app.factory.payment_type_factory import payment_type_factory
+from app.core.container import Container
 from app.schema.payment_type_schema import PaymentType
+from app.services.payment_type_service import PaymentTypeService
 
 payment_type_router = APIRouter(
     prefix='/payment-type',
@@ -12,8 +12,8 @@ payment_type_router = APIRouter(
 
 
 @payment_type_router.get('', response_model=list[PaymentType])
+@inject
 async def get_payment_type_list(
-        session: Session = Depends(get_db)
+        service: PaymentTypeService = Depends(Provide[Container.payment_type_service])
 ):
-    service = payment_type_factory(session)
     return service.get_list()
