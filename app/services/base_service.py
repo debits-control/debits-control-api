@@ -1,7 +1,4 @@
-from typing import Type
-
 from app.repository.base_repository import BaseRepository
-from app.schema.base_schema import BaseSchema
 
 
 class BaseService:
@@ -14,10 +11,10 @@ class BaseService:
     def get_by_id(self, id: int):
         return self.repository.read_by_id(id)
 
-    def add(self, schema: Type[BaseSchema]):
+    def add(self, schema):
         return self.repository.create(schema)
 
-    def patch(self, id: int, schema: Type[BaseSchema]):
+    def patch(self, id: int, schema):
         return self.repository.update(id, schema)
 
     def patch_attr(self, id: int, column: str, value):

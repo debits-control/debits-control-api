@@ -4,9 +4,8 @@ from typing import Type, Callable
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
-from app.core.exceptions import DuplicatedError, NotFoundError
 from app.core.database import BaseModel
-from app.schema.base_schema import BaseSchema
+from app.core.exceptions import DuplicatedError, NotFoundError
 
 
 class BaseRepository:
@@ -22,7 +21,7 @@ class BaseRepository:
         with self.session_factory() as session:
             return session.query(self.model).filter(self.model.id == id).first()
 
-    def create(self, schema: Type[BaseSchema]):
+    def create(self, schema):
         with self.session_factory() as session:
             query = self.model(**schema.dict())
             try:
@@ -33,7 +32,7 @@ class BaseRepository:
                 raise DuplicatedError(detail=str(e.orig))
             return query
 
-    def update(self, id: int, schema: Type[BaseSchema]):
+    def update(self, id: int, schema):
         with self.session_factory() as session:
             session\
                 .query(self.model)\

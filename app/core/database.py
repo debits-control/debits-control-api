@@ -1,5 +1,5 @@
-from typing import Callable
 from contextlib import AbstractContextManager, contextmanager
+from typing import Callable
 
 from sqlalchemy import create_engine, Column, Integer, DateTime, func
 from sqlalchemy.orm import sessionmaker, as_declarative, declared_attr, Session, scoped_session

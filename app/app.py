@@ -2,8 +2,8 @@ from fastapi import FastAPI
 from fastapi.responses import RedirectResponse
 
 from app.core.container import Container
-from app.routers.user_routers import router as user_router
 from app.routers.payment_type_routers import payment_type_router
+from app.routers.user_routers import router as user_router
 
 app = FastAPI()
 

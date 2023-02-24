@@ -1,8 +1,8 @@
 from dependency_injector.containers import DeclarativeContainer, WiringConfiguration
 from dependency_injector.providers import Singleton, Factory
 
-from app.core.settings import settings
 from app.core.database import Database
+from app.core.settings import settings
 from app.repository.payment_type_repository import PaymentTypeRepository
 from app.repository.user_repository import UserRepository
 from app.services.user_service import UserService
