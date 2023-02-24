@@ -1,6 +1,6 @@
 from typing import Any
 
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, Column, Integer, DateTime, func
 from sqlalchemy.orm import sessionmaker, as_declarative, declared_attr, Session
 
 SQLALCHEMY_DATABASE_URL = 'sqlite:///./sql_app.db'
@@ -28,16 +28,18 @@ def get_db() -> Session:
     finally:
         session.close()
 
-# Base = declarative_base()
-
 
 @as_declarative()
-class Base:
-    id: Any
+class BaseModel:
+    __name__: str
 
     @declared_attr
     def __tablename__(cls) -> str:
         return cls.__name__.lower()
+
+    id = Column(Integer, primary_key=True, index=True)
+    created_at = Column(DateTime, default=func.now())
+    updated_at = Column(DateTime, default=func.now(), onupdate=func.now())
 
 
 class Database:
@@ -54,7 +56,7 @@ class Database:
         )
 
     def create_database(self) -> None:
-        Base.metadata.create_all(self._engine)
+        BaseModel.metadata.create_all(self._engine)
 
     def get_db(self) -> Session:
         session: Session = self.session_local()

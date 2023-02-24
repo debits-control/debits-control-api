@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String, Float, ForeignKey
 
-from app.model.base_model import BaseModel
+from app.core.database import BaseModel
 
 
 class Debit(BaseModel):

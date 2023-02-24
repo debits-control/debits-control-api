@@ -1,14 +1,11 @@
 from sqlalchemy import Column, String, Integer, DateTime, func
 
-from app.core.database import Base
+from app.core.database import BaseModel
 
 
-class User(Base):
+class User(BaseModel):
     __tablename__ = 'users'
 
-    id = Column(Integer, primary_key=True, index=True)
-    created_at = Column(DateTime, default=func.now())
-    updated_at = Column(DateTime, default=func.now(), onupdate=func.now())
     name = Column(String)
     email = Column(String, unique=True, index=True)
     password = Column(String)
