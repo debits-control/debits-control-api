@@ -2,7 +2,7 @@ from dependency_injector.wiring import Provide, inject
 from fastapi import APIRouter, Depends
 
 from app.core.container import Container
-from app.schema.payment_type_schema import PaymentType, PaymentTypeCreate
+from app.schema.payment_type_schema import PaymentType
 from app.services.payment_type_service import PaymentTypeService
 
 payment_type_router = APIRouter(
