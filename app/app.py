@@ -18,7 +18,7 @@ async def root():
 class AppCreator:
     def __init__(self):
         self.app = FastAPI(
-            title="Controle de Debitos",
+            title="API - Controle de Debitos",
             version='0.0.1',
         )
 
