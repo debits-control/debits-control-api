@@ -10,7 +10,7 @@ password_context = CryptContext(schemes=['bcrypt'], deprecated='auto')
 ALGORITHM = 'HS256'
 
 oauth2_scheme = OAuth2PasswordBearer(
-    tokenUrl='signin'
+    tokenUrl='/auth/sign-in'
 )
 
 
@@ -28,6 +28,6 @@ def create_access_token(subject: dict, expires_delta: timedelta = None):
     else:
         expires_delta = datetime.utcnow() + timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
 
-    to_encode = {'exp': expires_delta, 'sub': str(subject)}
+    to_encode = {'exp': expires_delta, **subject}
     encoded_jwt = jwt.encode(to_encode, settings.SECRET_KEY, ALGORITHM)
     return encoded_jwt
