@@ -3,7 +3,7 @@ from fastapi import APIRouter, Depends
 
 from app.core.container import Container
 from app.core.dependency import get_current_user
-from app.core.security import oauth2_scheme
+from app.core.security import JWTBearer
 from app.schema.payment_type_schema import PaymentType, PaymentTypeFormData
 from app.schema.user_schema import User
 from app.services.payment_type_service import PaymentTypeService
@@ -11,7 +11,7 @@ from app.services.payment_type_service import PaymentTypeService
 payment_type_router = APIRouter(
     prefix='/payment-type',
     tags=['payment-type'],
-    dependencies=[Depends(oauth2_scheme)],
+    dependencies=[Depends(JWTBearer())],
 )
 
 

@@ -3,7 +3,7 @@ from fastapi import APIRouter, Depends
 
 from app.core.container import Container
 from app.core.dependency import get_current_user
-from app.core.security import oauth2_scheme
+from app.core.security import JWTBearer
 from app.schema.debit_schema import Debit, DebitFormData
 from app.schema.user_schema import User
 from app.services.debit_service import DebitService
@@ -11,7 +11,7 @@ from app.services.debit_service import DebitService
 debit_router = APIRouter(
     prefix='/debit',
     tags=['debit'],
-    dependencies=[Depends(oauth2_scheme)]
+    dependencies=[Depends(JWTBearer())]
 )
 
 

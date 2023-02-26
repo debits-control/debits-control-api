@@ -1,12 +1,10 @@
 from datetime import timedelta
 
-from fastapi.security import OAuth2PasswordRequestForm
-
 from app.core.exceptions import AuthError
 from app.core.security import verify_password, create_access_token, get_hashed_password
 from app.core.settings import settings
 from app.repository.user_repository import UserRepository
-from app.schema.auth_schema import Payload, SignInResponse, SignUp
+from app.schema.auth_schema import Payload, SignInResponse, SignUp, SignIn
 from app.schema.user_schema import UserCreate
 from app.services.base_service import BaseService
 
@@ -16,11 +14,11 @@ class AuthService(BaseService):
         self.user_repository = user_repository
         super().__init__(user_repository)
 
-    def sign_in(self, form_data: OAuth2PasswordRequestForm):
-        user = self.user_repository.ready_by_email(form_data.username)
+    def sign_in(self, sign_in_data: SignIn):
+        user = self.user_repository.ready_by_email(sign_in_data.email)
         if not user:
             raise AuthError(detail='Incorrect username or password')
-        if not verify_password(form_data.password, user.password):
+        if not verify_password(sign_in_data.password, user.password):
             raise AuthError(detail='Incorrect username or password')
 
         payload = Payload(

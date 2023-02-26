@@ -7,7 +7,7 @@ from pydantic import ValidationError
 
 from app.core.container import Container
 from app.core.exceptions import AuthError, ForbiddenError
-from app.core.security import oauth2_scheme, ALGORITHM
+from app.core.security import ALGORITHM, JWTBearer
 from app.core.settings import settings
 from app.schema.auth_schema import TokenPayload
 from app.schema.user_schema import User
@@ -16,7 +16,7 @@ from app.services.user_service import UserService
 
 @inject
 async def get_current_user(
-        token: str = Depends(oauth2_scheme),
+        token: str = Depends(JWTBearer()),
         service: UserService = Depends(Provide[Container.user_service]),
 ) -> User:
     try:

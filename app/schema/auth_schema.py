@@ -1,14 +1,19 @@
 from pydantic import BaseModel
 
 
-class SignUp(BaseModel):
-    name: str
+class SignIn(BaseModel):
     email: str
     password: str
 
 
 class SignInResponse(BaseModel):
     access_token: str
+
+
+class SignUp(BaseModel):
+    name: str
+    email: str
+    password: str
 
 
 class Payload(BaseModel):
