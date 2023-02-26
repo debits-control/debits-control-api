@@ -2,12 +2,14 @@ from dependency_injector.wiring import Provide, inject
 from fastapi import APIRouter, Depends
 
 from app.core.container import Container
+from app.core.security import oauth2_scheme
 from app.schema.user_schema import User, UserCreate
 from app.services.user_service import UserService
 
 router = APIRouter(
     prefix='/user',
-    tags=['user']
+    tags=['user'],
+    dependencies=[Depends(oauth2_scheme)],
 )
 
 

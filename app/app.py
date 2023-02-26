@@ -26,10 +26,10 @@ class AppCreator:
         self.db = self.container.database()
         self.db.create_database()
 
-        self.app.include_router(user_router)
+        self.app.include_router(auth_router)
         self.app.include_router(payment_type_router)
         self.app.include_router(debit_router)
-        self.app.include_router(auth_router)
+        self.app.include_router(user_router)
 
 
 app_creator = AppCreator()
