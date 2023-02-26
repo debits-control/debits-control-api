@@ -9,8 +9,12 @@ class PaymentTypeBase(BaseModel):
     is_default: bool
 
 
-class PaymentTypeCreate(PaymentTypeBase):
+class PaymentTypeFormData(PaymentTypeBase):
     ...
+
+
+class PaymentTypeCreate(PaymentTypeBase):
+    owner_id: int
 
 
 class PaymentType(BaseSchema, PaymentTypeBase):
