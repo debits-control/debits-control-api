@@ -1,3 +1,5 @@
+import os
+
 from pydantic import BaseSettings
 
 
@@ -6,7 +8,10 @@ class Settings(BaseSettings):
 
     # auth
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24 * 7
-    SECRET_KEY: str = 'a622568486010900860c3ecda40f3ded0f2a092840482cb41d735027ecd8695a'
+    SECRET_KEY: str = os.getenv('SECRET_KEY', '')
+
+    class Config:
+        env_file = '.env'
 
 
 settings = Settings()
