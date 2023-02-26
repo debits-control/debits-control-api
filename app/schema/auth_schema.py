@@ -15,3 +15,7 @@ class Payload(BaseModel):
     id: int
     email: str
     name: str
+
+
+class TokenPayload(Payload):
+    exp: float
