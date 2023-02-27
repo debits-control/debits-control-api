@@ -9,4 +9,3 @@ class User(BaseModel):
     name = Column(String)
     email = Column(String, unique=True, index=True)
     password = Column(String)
-    user_token = Column(String, unique=True, nullable=True)

@@ -22,7 +22,6 @@ class Database:
     def __init__(self, database_url: str) -> None:
         self._engine = create_engine(
             database_url,
-            connect_args={'check_same_thread': False},  # only needed to sqlite database, remove to others
             echo=True,
         )
         self._session_factory = scoped_session(
